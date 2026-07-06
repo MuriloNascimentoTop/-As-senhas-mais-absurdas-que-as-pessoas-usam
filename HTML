@@ -1,57 +1,30 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Senhas Absurdas</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+document.getElementById('check-btn').addEventListener('click', function() {
+    const passwordInput = document.getElementById('password-input').value.trim();
+    const resultDiv = document.getElementById('result-message');
 
-    <header>
-        <h1>As Senhas Mais Absurdas do Mundo</h1>
-        <p>Acredite se quiser: tem gente que ainda usa isso em pleno século XXI.</p>
-    </header>
+    // Lista das senhas absurdamente comuns
+    const absurdPasswords = [
+        '123456', '123456789', 'password', 'senha', 'qwerty', 
+        '12345', '111111', 'mudar123', 'admin', 'iloveyou'
+    ];
 
-    <main class="container">
-        <section class="card simulator">
-            <h2>Será que sua senha é um absurdo?</h2>
-            <p>Teste o nível de "absurdidade" da sua senha abaixo:</p>
-            <div class="input-group">
-                <input type="password" id="password-input" placeholder="Digite uma senha comum (ex: 123456)">
-                <button id="check-btn">Testar Senha</button>
-            </div>
-            <div id="result-message" class="result hidden"></div>
-        </section>
+    // Limpa classes anteriores
+    resultDiv.className = 'result';
 
-        <section class="grid">
-            <div class="card password-card">
-                <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=600" alt="Teclado numérico">
-                <h3>O Clássico Preguiçoso</h3>
-                <span class="bad-pwd">"123456"</span>
-                <p>Ano após ano, continua no topo das senhas mais usadas. É o equivalente a trancar a porta e deixar a chave na fechadura.</p>
-            </div>
+    if (passwordInput === '') {
+        resultDiv.classList.add('absurd');
+        resultDiv.innerText = '⚠️ Digite algo primeiro para testar!';
+    } else if (absurdPasswords.includes(passwordInput.toLowerCase())) {
+        resultDiv.classList.add('absurd');
+        resultDiv.innerText = '🚨 ALERTA ABSURDO! Essa é uma das senhas mais hackeadas do planeta!';
+    } else if (passwordInput.length < 8) {
+        resultDiv.classList.add('absurd');
+        resultDiv.innerText = '❌ Muito curta! Senhas com menos de 8 caracteres são fáceis de quebrar.';
+    } else {
+        resultDiv.classList.add('safe');
+        resultDiv.innerText = '✅ Parece seguro! Sua senha não está na lista das piores do mundo.';
+    }
 
-            <div class="card password-card">
-                <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=600" alt="Palavra senha escrita">
-                <h3>A Ironia Viva</h3>
-                <span class="bad-pwd">"password" ou "senha"</span>
-                <p>Usar a palavra "senha" como senha é um convite aberto para qualquer um adivinhar em menos de um segundo.</p>
-            </div>
-
-            <div class="card password-card">
-                <img src="https://images.unsplash.com/photo-1595275313331-5a0341774301?q=80&w=600" alt="Teclado QWERTY">
-                <h3>O Deslize de Dedos</h3>
-                <span class="bad-pwd">"qwerty"</span>
-                <p>Apenas a primeira linha de letras do teclado. Se o hacker souber como o teclado foi desenhado, você já era.</p>
-            </div>
-        </section>
-    </main>
-
-    <footer>
-        <p>Proteja-se! Use um gerenciador de senhas e ative a autenticação de dois fatores (2FA).</p>
-    </footer>
-
-    <script src="main.js"></script>
-</body>
-</html>
+    // Mostra o resultado removendo a classe hidden
+    resultDiv.classList.remove('hidden');
+});
