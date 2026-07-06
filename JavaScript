@@ -1,0 +1,30 @@
+document.getElementById('check-btn').addEventListener('click', function() {
+    const passwordInput = document.getElementById('password-input').value.trim();
+    const resultDiv = document.getElementById('result-message');
+
+    // Lista das senhas absurdamente comuns
+    const absurdPasswords = [
+        '123456', '123456789', 'password', 'senha', 'qwerty', 
+        '12345', '111111', 'mudar123', 'admin', 'iloveyou'
+    ];
+
+    // Limpa classes anteriores
+    resultDiv.className = 'result';
+
+    if (passwordInput === '') {
+        resultDiv.classList.add('absurd');
+        resultDiv.innerText = '⚠️ Digite algo primeiro para testar!';
+    } else if (absurdPasswords.includes(passwordInput.toLowerCase())) {
+        resultDiv.classList.add('absurd');
+        resultDiv.innerText = '🚨 ALERTA ABSURDO! Essa é uma das senhas mais hackeadas do planeta!';
+    } else if (passwordInput.length < 8) {
+        resultDiv.classList.add('absurd');
+        resultDiv.innerText = '❌ Muito curta! Senhas com menos de 8 caracteres são fáceis de quebrar.';
+    } else {
+        resultDiv.classList.add('safe');
+        resultDiv.innerText = '✅ Parece seguro! Sua senha não está na lista das piores do mundo.';
+    }
+
+    // Mostra o resultado removendo a classe hidden
+    resultDiv.classList.remove('hidden');
+});
